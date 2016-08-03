@@ -3,7 +3,7 @@ describe('Thermostat',function() {
   beforeEach(function() {
     thermostat = new Thermostat();
   });
-  describe("temperature",function() {
+  describe("Temperature",function() {
     it("is set to 20 degrees as initial value",function() {
       expect(thermostat.temperature).toEqual(20);
     });
@@ -19,8 +19,12 @@ describe('Thermostat',function() {
       thermostat.decreaseTemperature(11);
       expect(thermostat.temperature).toEqual(10);
     });
+    it("can be reseted",function() {
+      thermostat.reset();
+      expect(thermostat.temperature).toEqual(20);
+    });
   });
-  describe('power saving mode',function() {
+  describe('Power Saving Mode',function() {
     it("when it's set 'on' max temperature can be 25 degrees",function() {
       thermostat.setPowerSavingModeOn();
       thermostat.increaseTemperature(6);
@@ -39,6 +43,19 @@ describe('Thermostat',function() {
       expect(thermostat.powerSavingMode).toBe(false);
       thermostat.setPowerSavingModeOn();
       expect(thermostat.powerSavingMode).toBe(true);
+    });
+  });
+  describe("Display Colour",function() {
+    it("is green if temperature is below 18 degrees",function() {
+      thermostat.decreaseTemperature(3);
+      expect(thermostat.displayColour).toEqual("green");
+    });
+    it("is yellow if temperature is between 18 and 24 degrees",function() {
+      expect(thermostat.displayColour).toEqual("yellow");
+    });
+    it("is red if temperature is above 24 degrees",function() {
+      thermostat.increaseTemperature(5);
+      expect(thermostat.displayColour).toEqual("red");
     });
   });
 });
